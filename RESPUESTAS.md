@@ -32,3 +32,14 @@ No. En geometría un cuadrado es un rectángulo, pero en código no se comporta 
 
 **¿Qué abstracción común podríamos usar?**
 Una interfaz `Shape` con `area()`. Es lo único que toda figura cumple, y cada figura se modela por separado.
+
+## 4. ISP
+
+**¿Qué método no necesita `SimplePrinter`?**
+`scan` y `fax`. Solo imprime, pero la interfaz grande la obligaba a tenerlos.
+
+**¿Qué problema causa implementar métodos que lanzan errores?**
+El código promete algo que no cumple. Quien la use puede llamar a `scan()` creyendo que funciona, y el programa explota recién al ejecutarse, no al compilar.
+
+**¿Cómo separar las capacidades de una impresora?**
+En interfaces chicas: `Printer`, `Scanner` y `Fax`. Cada clase implementa solo las que puede cumplir.
