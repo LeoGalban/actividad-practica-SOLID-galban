@@ -21,3 +21,14 @@ Con una interfaz `PaymentMethod` y una clase por cada medio (`CardPayment`, `Cas
 
 **¿Qué comportamiento común tienen todos los medios de pago?**
 Todos pagan un monto: el método `pay(amount)`. Cada uno lo hace a su manera, pero `PaymentProcessor` solo necesita saber que existe.
+
+## 3. LSP
+
+**¿Por qué el área final no coincide con lo que espera `resizeRectangle`?**
+Porque `Square` cambia el ancho y el alto juntos. Al hacer `setHeight(10)` también pisa el ancho, y queda 10x10 = 100 en vez de 5x10 = 50.
+
+**¿Es siempre correcto modelar un cuadrado como un rectángulo por herencia?**
+No. En geometría un cuadrado es un rectángulo, pero en código no se comporta igual: no se le puede cambiar un lado sin cambiar el otro. Entonces no puede reemplazar al rectángulo sin romper el programa.
+
+**¿Qué abstracción común podríamos usar?**
+Una interfaz `Shape` con `area()`. Es lo único que toda figura cumple, y cada figura se modela por separado.
