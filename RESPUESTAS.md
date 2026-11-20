@@ -43,3 +43,14 @@ El código promete algo que no cumple. Quien la use puede llamar a `scan()` crey
 
 **¿Cómo separar las capacidades de una impresora?**
 En interfaces chicas: `Printer`, `Scanner` y `Fax`. Cada clase implementa solo las que puede cumplir.
+
+## 5. DIP
+
+**¿Qué dependencia concreta crea `OrderService`?**
+Crea un `EmailSender` con `new` adentro de `createOrder`. Queda atado al correo y no se puede cambiar sin modificar la clase.
+
+**¿Cómo probarías la clase sin enviar un correo?**
+Pasándole por constructor un notificador falso que implemente `Notifier` y que solo guarde el mensaje en una variable. Así se comprueba que se llamó, sin mandar nada real.
+
+**¿Qué contrato común podrían implementar el correo y el SMS?**
+Una interfaz `Notifier` con `send(to, message)`. `EmailNotifier` y `SmsNotifier` la implementan, y `OrderService` funciona con cualquiera.

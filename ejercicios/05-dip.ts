@@ -1,16 +1,33 @@
-class EmailSender {
+// Abstracción: cualquier forma de avisar al cliente
+interface Notifier {
+  send(to: string, message: string): void;
+}
+
+class EmailNotifier implements Notifier {
   send(to: string, message: string): void {
     console.log(`Correo para ${to}: ${message}`);
   }
 }
 
-class OrderService {
-  createOrder(customerEmail: string): void {
-    console.log("Pedido creado");
-
-    const emailSender = new EmailSender();
-    emailSender.send(customerEmail, "Tu pedido fue creado");
+class SmsNotifier implements Notifier {
+  send(to: string, message: string): void {
+    console.log(`SMS para ${to}: ${message}`);
   }
 }
 
-new OrderService().createOrder("ana@example.com");
+// Depende de la interfaz, no de una clase concreta
+class OrderService {
+  private notifier: Notifier;
+
+  // La dependencia llega desde afuera
+  constructor(notifier: Notifier) {
+    this.notifier = notifier;
+  }
+
+  createOrder(customerEmail: string): void {
+    console.log("Pedido creado");
+    this.notifier.send(customerEmail, "Tu pedido fue creado");
+  }
+}
+
+new OrderService(new EmailNotifier()).createOrder("ana@example.com");
