@@ -10,3 +10,14 @@ Hay que tocar `UserManager`, aunque la validación y el correo no cambien, y se 
 
 **¿Qué clase podría encargarse de enviar correos?**
 Una clase `EmailService`, que solo sepa mandar correos. `UserRegistrationService` la usa sin saber cómo funciona por dentro.
+
+## 2. OCP
+
+**¿Qué parte debe modificarse para agregar pago con transferencia?**
+En el original hay que tocar `PaymentProcessor`: agregar `"transfer"` al tipo y otro `case` al `switch`. Cada medio nuevo obliga a modificar una clase que ya funcionaba.
+
+**¿Cómo podríamos representar un medio de pago?**
+Con una interfaz `PaymentMethod` y una clase por cada medio (`CardPayment`, `CashPayment`, `TransferPayment`).
+
+**¿Qué comportamiento común tienen todos los medios de pago?**
+Todos pagan un monto: el método `pay(amount)`. Cada uno lo hace a su manera, pero `PaymentProcessor` solo necesita saber que existe.
