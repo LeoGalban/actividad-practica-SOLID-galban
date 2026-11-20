@@ -146,3 +146,40 @@ Preguntas:
 La solucion recibe una dependencia que cumple la interfaz `Notifier` mediante el constructor.
 
 ---
+
+## Resolución (Leonel Galban)
+
+### Cómo correrlo
+
+Requisitos: Node 22.18 o superior. Node ejecuta los `.ts` directamente (type stripping), sin compilar.
+
+```bash
+npm install            # instala TypeScript
+npx tsc --noEmit       # chequeo de tipos (strict)
+npm run 01-srp
+npm run 02-ocp
+npm run 03-lsp
+npm run 04-isp
+npm run 05-dip
+```
+
+- Respuestas a las preguntas: [`RESPUESTAS.md`](RESPUESTAS.md)
+- Salida de los ejercicios antes del refactor: [`SALIDA_ORIGINAL.md`](SALIDA_ORIGINAL.md)
+
+### Resumen por principio
+
+- **SRP:** `UserManager` se separó en `UserValidator`, `UserRepository` y `EmailService`, coordinados por `UserRegistrationService`.
+- **OCP:** cada medio de pago es una clase que implementa `PaymentMethod`, así se agregan medios nuevos sin tocar `PaymentProcessor`.
+- **LSP:** `Square` ya no hereda de `Rectangle`; las dos implementan `Shape` y `resizeRectangle` solo usa `area()`.
+- **ISP:** `MultifunctionPrinter` se partió en `Printer`, `Scanner` y `Fax`; `SimplePrinter` solo implementa `Printer`.
+- **DIP:** `OrderService` recibe un `Notifier` por constructor (`EmailNotifier` o `SmsNotifier`) en vez de crear un `EmailSender`.
+
+### Comparación con la salida original
+
+| Ejercicio | ¿Misma salida? |
+|---|---|
+| 01-srp | Sí (no imprime nada, igual que el original) |
+| 02-ocp | Sí |
+| 03-lsp | Cambia a propósito: el original no corría con `node` y su segunda línea mostraba el bug (esperada 50, obtenida 100). Ahora cada figura informa su área real. |
+| 04-isp | Sí |
+| 05-dip | Sí |
